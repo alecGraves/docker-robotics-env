@@ -6,6 +6,7 @@ FROM ros:kinetic-ros-core
 
 COPY .bash_aliases /root/
 COPY .vimrc /root/
+COPY new_entrypoint.sh /
 
 RUN apt-get update
 
@@ -55,3 +56,12 @@ make -j $(nproc) install
 # Get vim plugin manager file
 RUN curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+
+RUN rm /ros_entrypoint.sh; \
+    mv /new_entrypoint.sh /ros_entrypoint.sh; \
+    chmod +x ros_entrypoint.sh; \
+    rm ~/.bashrc; \
+    mv /.bashrc ~/; \
+	mv /.bash_aliases ~/
+
