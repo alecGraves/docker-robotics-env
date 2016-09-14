@@ -10,8 +10,9 @@ apt update && \
 apt -y install ros-kinetic-ros-core && \
 rosdep init && \
 rosdep update && \
-echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc && \
-echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc && \
+#This is made redundant by entrypoint and does not work otherwise.
+#echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc && \
+#echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc && \
 
 #install ros packages
 apt -y install ros-kinetic-cv-bridge ros-kinetic-image-transport ros-kinetic-mavlink ros-kinetic-mavros ros-kinetic-mavros-msgs \

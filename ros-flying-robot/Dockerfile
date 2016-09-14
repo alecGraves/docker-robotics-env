@@ -9,4 +9,4 @@ RUN sed -i 's/\r$//' ~/setupenv.sh ~/.bash_aliases
 
 RUN bash ~/setupenv.sh
 
-ENTRYPOINT ["entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
