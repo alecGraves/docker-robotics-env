@@ -8,13 +8,14 @@ COPY .bash_aliases /root/
 COPY .vimrc /root/
 COPY new_entrypoint.sh /
 
-RUN apt-get update
-
 # Install useful/necessary packages
-RUN apt-get -y install git vim cmake catkin python3-dev python3-numpy \
+RUN ulimit -n 2048 && \
+	apt-get update && \
+	apt-get -y install curl git vim cmake catkin python3-dev python3-numpy \
 	ros-kinetic-cv-bridge ros-kinetic-image-transport \
 	ros-kinetic-mavlink ros-kinetic-mavros ros-kinetic-mavros-msgs \
-    ros-kinetic-cmake-modules ros-kinetic-control-toolbox
+    ros-kinetic-cmake-modules ros-kinetic-control-toolbox && \
+	rm -rf /var/lib/apt/lists/*
 
 # Setup catkin
 RUN mkdir -p ~/catkin_ws/src && \
@@ -44,24 +45,21 @@ RUN cd && \
 	mkdir pid-controller/build && \
 	cd pid-controller/build && \
 	cmake .. && \
-	make -j $(nproc) &&
+	make -j $(nproc) && \
 	make -j $(nproc) install
 
 # Install Atlante
-cd && \
-git clone https://github.com/uavster/atlante.git && \
-cd atlante && \
-make -j $(nproc) install
+RUN cd && \
+	git clone https://github.com/uavster/atlante.git && \
+	cd atlante && \
+	make -j $(nproc) install
 
 # Get vim plugin manager file
 RUN curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-
+#configure entrypoint
 RUN rm /ros_entrypoint.sh; \
     mv /new_entrypoint.sh /ros_entrypoint.sh; \
     chmod +x ros_entrypoint.sh; \
-    rm ~/.bashrc; \
-    mv /.bashrc ~/; \
-	mv /.bash_aliases ~/
 
