@@ -1,0 +1,22 @@
+dist: xenial
+sudo: required
+
+services:
+  - docker
+
+env:
+  global:
+    - CI_SOURCE_PATH=$(pwd)
+
+before_install:
+  - docker pull shadysource/xenial
+
+script:
+  - cd $CLI_SOURCE_PATH/??dir_with_dockerfile??
+  - docker build -t shadysource/xenial
+
+after_success:
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+    docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+    docker push shadysource/xenial;
+    fi
