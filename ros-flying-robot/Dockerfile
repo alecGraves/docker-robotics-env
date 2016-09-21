@@ -8,6 +8,9 @@ COPY .bash_aliases /root/
 COPY .vimrc /root/
 COPY new_entrypoint.sh /
 
+#fix sourcing with bashrc
+RUN rm /bin/sh && ln -s /bin/bash /bin/sh
+
 # Install useful/necessary packages
 RUN ulimit -n 2048 && \
 	apt-get update && \
