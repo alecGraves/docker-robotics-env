@@ -64,5 +64,9 @@ RUN curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 #configure entrypoint
 RUN rm /ros_entrypoint.sh; \
     mv /new_entrypoint.sh /ros_entrypoint.sh; \
-    chmod +x ros_entrypoint.sh; \
+    chmod +x ros_entrypoint.sh
+    
+Run sudo apt-get autoremove && \
+    sudo apt-get clean && \
+    sudo apt-get autoclean
 
