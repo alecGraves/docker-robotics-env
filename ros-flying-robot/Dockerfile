@@ -18,6 +18,7 @@ RUN ulimit -n 2048 && \
 	ros-kinetic-cv-bridge ros-kinetic-image-transport \
 	ros-kinetic-mavlink ros-kinetic-mavros ros-kinetic-mavros-msgs \
     ros-kinetic-cmake-modules ros-kinetic-control-toolbox && \
+    ros-kinetic-nodelet && \
 	rm -rf /var/lib/apt/lists/*
 
 # Setup catkin
@@ -40,7 +41,9 @@ RUN cd && \
 	.. && \
 	make -j $(nproc) && \
 	make -j $(nproc) install && \
-	ldconfig
+	ldconfig &&\
+	cd && \
+	rm -rf opencv
 
 # Install pid-controller
 RUN cd && \
