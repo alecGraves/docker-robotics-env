@@ -17,8 +17,7 @@ RUN ulimit -n 2048 && \
 	apt-get -y install curl git vim cmake catkin python3-dev python3-numpy \
 	ros-kinetic-cv-bridge ros-kinetic-image-transport \
 	ros-kinetic-mavlink ros-kinetic-mavros ros-kinetic-mavros-msgs \
-    ros-kinetic-cmake-modules ros-kinetic-control-toolbox && \
-    ros-kinetic-nodelet && \
+   	ros-kinetic-cmake-modules ros-kinetic-control-toolbox && \
 	rm -rf /var/lib/apt/lists/*
 
 # Setup catkin
